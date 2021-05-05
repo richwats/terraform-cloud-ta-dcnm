@@ -168,7 +168,7 @@ resource "dcnm_network" "tfcb-net-2" {
   name            = "tfcb-net-2"
   network_id      = 31602
   display_name    = "tfcb-net-2"
-  description     = "L3 VXLAN Network #2. Created by Terraform Cloud 2"
+  description     = "L3 VXLAN Network #2. Created by Terraform Cloud 3"
   vrf_name        = dcnm_vrf.tfcb-vrf-1.name
   vlan_id         = 1602
   vlan_name       = "tfcb-net-2"
