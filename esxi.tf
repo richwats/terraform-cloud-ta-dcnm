@@ -44,16 +44,16 @@ variable "diskSizeWorkaround" {
 *
 */
 
-resource "vsphere_distributed_port_group" "tfcb-local1001" {
-  name                            = "tf-local1001"
+resource "vsphere_distributed_port_group" "tfcb-net-1" {
+  name                            = dcnm_network.tfcb-net-1.name
   distributed_virtual_switch_uuid = data.vsphere_distributed_virtual_switch.DVS-DCNM.id
-  vlan_id                         = 1001
+  vlan_id                         = dcnm_network.tfcb-net-1.vlan_id
 }
 
-resource "vsphere_distributed_port_group" "tfcb-local1002" {
-  name                            = "tf-local1002"
+resource "vsphere_distributed_port_group" "tfcb-net-2" {
+  name                            = dcnm_network.tfcb-net-2.name
   distributed_virtual_switch_uuid = data.vsphere_distributed_virtual_switch.DVS-DCNM.id
-  vlan_id                         = 1002
+  vlan_id                         = dcnm_network.tfcb-net-2.vlan_id
 }
 
 /*
@@ -72,7 +72,7 @@ resource "vsphere_virtual_machine" "tfcb-dcnm-host1" {
   scsi_type = data.vsphere_virtual_machine.ubuntuTemplate.scsi_type
 
   network_interface {
-    network_id   = vsphere_distributed_port_group.tfcb-local1001.id
+    network_id   = vsphere_distributed_port_group.tfcb-net-1.id
     adapter_type = data.vsphere_virtual_machine.ubuntuTemplate.network_interface_types[0]
   }
 
@@ -94,10 +94,10 @@ resource "vsphere_virtual_machine" "tfcb-dcnm-host1" {
       }
 
       network_interface {
-        ipv4_address = "10.66.209.4"
-        ipv4_netmask = 28
+        ipv4_address = "192.168.31.11"
+        ipv4_netmask = 24
       }
-      ipv4_gateway = "10.66.209.1"
+      ipv4_gateway = "192.168.31.1"
       dns_server_list = ["64.104.123.245","171.70.168.183"]
     }
   }
@@ -115,7 +115,7 @@ resource "vsphere_virtual_machine" "tfcb-dcnm-host2" {
   scsi_type = data.vsphere_virtual_machine.ubuntuTemplate.scsi_type
 
   network_interface {
-    network_id   = vsphere_distributed_port_group.tfcb-local1002.id
+    network_id   = vsphere_distributed_port_group.tfcb-net-2.id
     adapter_type = data.vsphere_virtual_machine.ubuntuTemplate.network_interface_types[0]
   }
 
@@ -137,10 +137,10 @@ resource "vsphere_virtual_machine" "tfcb-dcnm-host2" {
       }
 
       network_interface {
-        ipv4_address = "10.66.209.12"
-        ipv4_netmask = 28
+        ipv4_address = "192.168.32.11"
+        ipv4_netmask = 24
       }
-      ipv4_gateway = "10.66.209.9"
+      ipv4_gateway = "192.168.32.1"
       dns_server_list = ["64.104.123.245","171.70.168.183"]
     }
   }
