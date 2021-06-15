@@ -103,9 +103,9 @@ resource "vsphere_virtual_machine" "tfcb-dcnm-host1" {
   }
 }
 
-### Host 1
+### Host 2
 resource "vsphere_virtual_machine" "tfcb-dcnm-host2" {
-  name             = "tfcb-dcnm-host1"
+  name             = "tfcb-dcnm-host2"
   resource_pool_id = data.vsphere_compute_cluster.CL1.resource_pool_id
   datastore_id     = data.vsphere_datastore.NIMBLE-DS-1.id
 
